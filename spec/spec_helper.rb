@@ -4,6 +4,27 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 
+#Added to fix TDD execution error on visit method for rspec
+#copied from https://github.com/rspec/rspec-rails/issues/360
+begin
+  require 'capybara/rspec'
+rescue LoadError 
+end
+
+begin
+  require 'capybara/rails'
+rescue LoadError
+end
+
+begin
+  require 'webrat'
+rescue LoadError
+end
+#also rename directory spec/requests to spec/features since capybara 2
+#will will not be available by default in rspec/requests directory
+
+# End of added block for rspec error
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
